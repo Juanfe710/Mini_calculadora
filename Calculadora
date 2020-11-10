@@ -1,0 +1,120 @@
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+
+
+def init_window():
+    window=tk.Tk()
+    window.title('Mi primera aplicación')
+    window.geometry('1000x450')
+    window.config(bg='black')
+    
+    label=tk.Label(window,text='Calculadora',font=('Arial bold',20))
+    label.grid(column=0,row=0)
+    
+    entrada1=tk.Entry(window,width=10)
+    entrada2=tk.Entry(window,width=10)
+    entrada1.grid(column=1,row=1)
+    entrada2.grid(column=1,row=2)
+    label_entrada1=tk.Label(window,text='Ingrese el primer número:',font=('Arial bold',10))
+    label_entrada2=tk.Label(window,text='Ingrese el segundo número:',font=('Arial bold',10))
+    label_entrada1.grid(column=0,row=1)
+    label_entrada2.grid(column=0,row=2)
+    
+    label_operador=tk.Label(window,text='Escoja un operador',font=('Arial bold',10))
+    label_operador.grid(column=0,row=4)
+    
+    combo_operadores=ttk.Combobox(window)
+    combo_operadores['values']=['+','-','*','/','pow']
+    combo_operadores.current(0)
+    combo_operadores.grid(column=1,row=4)
+    
+    label_resultado=tk.Label(window,text='Resultado: ',font=('Arial bold',15))
+    label_resultado.grid(column=0, row=7)
+    
+    
+    
+    def calculadora(num1,num2,operador):
+        if operador=='+':
+            resultado=num1+num2
+        elif operador=='-':
+            resultado=num1-num2
+        elif operador=='*':
+            resultado=num1*num2
+        elif operador=='/':
+            resultado=round(num1/num2,2)
+        elif operador=='pow':
+            resultado=num1**num2
+        return resultado
+            
+    
+    def click_calcular(label,num1,num2,operador):
+        valor1=float(num1)
+        valor2=float(num2)
+        
+        res=calculadora(valor1,valor2,operador)
+        
+        label.configure(text='Resultado: '+str(res))
+        
+    boton=tk.Button(window,command=lambda:click_calcular(label_resultado,entrada1.get(),entrada2.get(),combo_operadores.get()),text='Calcular',bg="red",fg="blue")
+    boton.grid(column=1,row=5)
+    
+    label_continuar1=tk.Label(window,text='¡Perfecto, ya probaste con una operación!')
+    label_continuar1.grid(column=0, row=9)
+    label_continuar2=tk.Label(window,text='¿Por qué no hacer las demás?')
+    label_continuar2.grid(column=0, row=10)
+    label_chulear=tk.Label(window, text='Te dejaré una lista para que marques las operaciones que vayas realizando: ')
+    label_chulear.grid(column=0, row=11)
+    
+    checklist_suma_state=tk.BooleanVar()
+    checklist_resta_state=tk.BooleanVar()
+    checklist_multiplicacion_state=tk.BooleanVar()
+    checklist_division_state=tk.BooleanVar()
+    checklist_potencia_state=tk.BooleanVar()
+    
+    checklist_suma_state.set(False)
+    checklist_resta_state.set(False)
+    checklist_multiplicacion_state.set(False)
+    checklist_division_state.set(False)
+    checklist_potencia_state.set(False)
+    
+    checklist_suma=tk.Checkbutton(window, text='Suma', var=checklist_suma_state)
+    checklist_resta=tk.Checkbutton(window, text='Resta', var=checklist_resta_state)
+    checklist_multiplicacion=tk.Checkbutton(window, text='Multiplicación', var=checklist_multiplicacion_state)
+    checklist_division=tk.Checkbutton(window, text='División', var=checklist_division_state)
+    checklist_potencia=tk.Checkbutton(window, text='Potenciación', var=checklist_potencia_state)
+    
+    checklist_suma.grid(column=0+1, row=13)
+    checklist_resta.grid(column=1+1, row=13)
+    checklist_multiplicacion.grid(column=2+1, row=13)
+    checklist_division.grid(column=3+1, row=13)
+    checklist_potencia.grid(column=4+1, row=13)    
+    
+    label_calificacion=tk.Label(window, text='¿Podrías por favor dar una calificación a esta calculadora?')
+    label_calificacion.grid(column=0, row=17)
+    
+    spin_calificacion=tk.Spinbox(window, from_=1, to=10, width=4)
+    spin_calificacion.grid(column=1,row=17)
+    
+    label_porcentaje=tk.Label(window, text='Ahora, el porcentaje de probabilidad de que recomiendes esta calculadora a un amigo.')
+    label_porcentaje.grid(column=0, row= 18)
+    
+    barra_porcentaje=tk.Scale(window, from_=0, to=100, orient=tk.HORIZONTAL)
+    barra_porcentaje.grid(column=1, row=18)
+    
+    label_terminar=tk.Label(window, text='Para finalizar la operación por favor clickea el botón.')
+    label_terminar.grid(column=0, row=20)
+    
+    def clicked():
+        messagebox.showinfo('Has llegado al final', 'Gracias por utilizar la calculadora')
+    
+    boton=tk.Button(window,text='Oprime aquí', command=clicked, bg="Blue", fg="Pink")
+    boton.grid(column=1, row=20)
+    
+    window.mainloop()
+
+    
+def main():
+    init_window()
+    
+main()
